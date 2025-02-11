@@ -9,7 +9,6 @@ import {
   Text,
 } from "@react-email/components";
 
-
 export default function EmailTemplate({
   userName = "",
   type = "monthly-report",
@@ -75,8 +74,8 @@ export default function EmailTemplate({
             )}
 
             <Text style={styles.footer}>
-              Thank you for using Welth. Keep tracking your finances for better
-              financial health!
+              Thank you for using FinTrack. Keep tracking your finances for
+              better financial health!
             </Text>
           </Container>
         </Body>
