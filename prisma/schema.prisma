@@ -65,6 +65,7 @@ model Transaction {
 }
 
 
+
 model Budget {
   id          String       @id @default(uuid())
   amount      Decimal
