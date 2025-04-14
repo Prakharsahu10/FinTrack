@@ -1,40 +1,97 @@
-
 # FinTrack
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+FinTrack is a personal finance management application built with Next.js that helps users track their expenses, manage multiple accounts, set budgets, and monitor their financial health.
+
+## Features
+
+- **Multiple Account Management**: Create and manage different types of accounts (Current, Savings)
+- **Transaction Tracking**: Record income and expenses with categorization
+- **Budget Management**: Set monthly budgets and track spending against them
+- **Dashboard Overview**: Visualize your financial data with charts and statistics
+- **Recurring Transactions**: Set up recurring transactions (daily, weekly, monthly, yearly)
+- **Receipt Storage**: Upload and store receipts for your transactions
+- **User Authentication**: Secure authentication system powered by Clerk
+
+## Tech Stack
+
+- **Frontend**: Next.js, React 19, Tailwind CSS, ShadCN UI
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: Clerk
+- **Email**: React Email and Resend
+- **Deployment**: Vercel (recommended)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or later)
+- NPM or Yarn
+- PostgreSQL database
+
+### Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/fintrack"
+DIRECT_URL="postgresql://username:password@localhost:5432/fintrack"
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+# Resend for Email
+RESEND_API_KEY=your_resend_api_key
+```
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/fintrack.git
+cd fintrack
+```
+
+2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up the database
+
+```bash
+npx prisma migrate dev
+```
+
+4. Run the development server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app`: Application routes and components using Next.js App Router
+- `/prisma`: Database schema and migrations
+- `/components`: Reusable UI components
+- `/actions`: Server actions for data fetching and mutations
+- `/lib`: Utility functions and helpers
+- `/emails`: Email templates
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
->>>>>>> 838865d (Initial commit from Create Next App)
+This project is licensed under the MIT License.
