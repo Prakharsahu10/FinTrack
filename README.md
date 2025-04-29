@@ -51,7 +51,7 @@ RESEND_API_KEY=your_resend_api_key
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/fintrack.git
+git clone https://github.com/Prakharsahu10/fintrack.git
 cd fintrack
 ```
 
