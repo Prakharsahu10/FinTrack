@@ -39,6 +39,12 @@ Clerk Auth • React Email • Resend
 
 </div>
 
+## 📸 Screenshots
+
+<div align="center">
+  <i>Your screenshots will go here</i>
+</div>
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
@@ -113,4 +119,6 @@ This project is licensed under the MIT License.
 
 ---
 
-
+<div align="center">
+  Made with ❤️ by [Your Name]
+</div>

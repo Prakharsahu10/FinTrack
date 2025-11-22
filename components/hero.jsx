@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const HeroSection = () => {
-  const imageRef = useRef(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Finance-related images from Unsplash
@@ -37,24 +36,6 @@ const HeroSection = () => {
     "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?w=1280&h=720&fit=crop", // Money growth
     "https://images.unsplash.com/photo-1616077167555-51f6bc516dfa?w=1280&h=720&fit=crop", // Investment growth
   ];
-
-  useEffect(() => {
-    const imageElement = imageRef.current;
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const scrollThreshold = 100;
-
-      if (scrollPosition > scrollThreshold) {
-        imageElement.classList.add("scrolled");
-      } else {
-        imageElement.classList.remove("scrolled");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Auto-advance carousel
   useEffect(() => {
@@ -109,7 +90,7 @@ const HeroSection = () => {
             <Link href="/dashboard">
               <Button
                 size="lg"
-                className="px-10 py-6 text-lg font-semibold shadow-2xl hover:scale-105 transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0"
+                className="px-10 py-6 text-lg font-semibold shadow-2xl hover:scale-105 transition-all duration-300 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 border-0"
               >
                 Get Started
               </Button>
