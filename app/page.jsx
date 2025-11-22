@@ -12,6 +12,7 @@ import {
 } from "@/data/landing";
 import HeroSection from "@/components/hero";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const LandingPage = () => {
   return (
@@ -58,7 +59,13 @@ const LandingPage = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16 space-y-4"
+          >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-semibold mb-4 border border-emerald-500/30">
               ✨ Features
             </div>
@@ -69,36 +76,42 @@ const LandingPage = () => {
               Powerful tools designed to help you take control of your financial
               future
             </p>
-          </div>
+          </motion.div>
 
           {/* Feature Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuresData.map((feature, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className="group p-6 border-2 border-gray-800 hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/20 relative overflow-hidden bg-gray-900"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-500 rounded-lg"></div>
+                <Card className="group p-6 border-2 border-gray-800 hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/20 relative overflow-hidden bg-gray-900">
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-500 rounded-lg"></div>
 
-                <CardContent className="space-y-4 pt-4 relative z-10">
-                  {/* Icon Container */}
-                  <div className="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-teal-500/50 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    {feature.icon}
-                  </div>
+                  <CardContent className="space-y-4 pt-4 relative z-10">
+                    {/* Icon Container */}
+                    <div className="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-teal-500/50 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                      {feature.icon}
+                    </div>
 
-                  {/* Content */}
-                  <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                    {feature.description}
-                  </p>
+                    {/* Content */}
+                    <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                      {feature.description}
+                    </p>
 
-                  {/* Animated bottom accent */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full"></div>
-                </CardContent>
-              </Card>
+                    {/* Animated bottom accent */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full"></div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -123,19 +136,33 @@ const LandingPage = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-4">
               How It Works
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
               Get started in three simple steps
             </p>
-          </div>
+          </motion.div>
 
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {howItWorksData.map((step, index) => (
-              <div key={index} className="relative group">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ y: -5 }}
+                className="relative group"
+              >
                 {/* Card */}
                 <div className="bg-gray-900 border border-gray-800 hover:border-teal-500/50 rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10 h-full flex flex-col items-center justify-center">
                   {/* Icon */}
@@ -170,7 +197,7 @@ const LandingPage = () => {
                     </svg>
                   </div>
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -189,41 +216,120 @@ const LandingPage = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-black">
+      <section
+        id="testimonials"
+        className="py-20 bg-black relative overflow-hidden"
+      >
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent"
+          >
             What Our Users Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonialsData.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="p-6 bg-gray-900 border-2 border-gray-800 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10"
-              >
-                <CardContent className="pt-4">
-                  <div className="flex items-center mb-4">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full ring-2 ring-emerald-500/50"
-                    />
-                    <div className="ml-4">
-                      <div className="font-semibold text-white">
-                        {testimonial.name}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {testimonial.role}
+          </motion.h2>
+
+          {/* Carousel Container */}
+          <div className="relative overflow-hidden mask-gradient">
+            <div className="flex gap-8 animate-scroll">
+              {/* Original testimonials */}
+              {testimonialsData.map((testimonial, index) => (
+                <Card
+                  key={`original-${index}`}
+                  className="flex-shrink-0 w-full md:w-96 p-6 bg-gray-900 border-2 border-gray-800 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10"
+                >
+                  <CardContent className="pt-4">
+                    <div className="flex items-center mb-4">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={40}
+                        height={40}
+                        className="rounded-full ring-2 ring-emerald-500/50"
+                      />
+                      <div className="ml-4">
+                        <div className="font-semibold text-white">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-sm text-gray-400">
+                          {testimonial.role}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <p className="text-gray-300">{testimonial.quote}</p>
-                </CardContent>
-              </Card>
-            ))}
+                    <p className="text-gray-300">{testimonial.quote}</p>
+                  </CardContent>
+                </Card>
+              ))}
+              {/* Duplicate testimonials for seamless loop */}
+              {testimonialsData.map((testimonial, index) => (
+                <Card
+                  key={`duplicate-${index}`}
+                  className="flex-shrink-0 w-full md:w-96 p-6 bg-gray-900 border-2 border-gray-800 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10"
+                >
+                  <CardContent className="pt-4">
+                    <div className="flex items-center mb-4">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={40}
+                        height={40}
+                        className="rounded-full ring-2 ring-emerald-500/50"
+                      />
+                      <div className="ml-4">
+                        <div className="font-semibold text-white">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-sm text-gray-400">
+                          {testimonial.role}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-gray-300">{testimonial.quote}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Scroll Animation Keyframes */}
+        <style jsx>{`
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(calc(-50%));
+            }
+          }
+
+          .animate-scroll {
+            animation: scroll 30s linear infinite;
+          }
+
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+
+          .mask-gradient {
+            mask-image: linear-gradient(
+              to right,
+              transparent,
+              black 10%,
+              black 90%,
+              transparent
+            );
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent,
+              black 10%,
+              black 90%,
+              transparent
+            );
+          }
+        `}</style>
       </section>
 
       {/* CTA Section */}

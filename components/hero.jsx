@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -79,14 +80,30 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="container mx-auto px-4 text-center relative z-10 py-20">
         <div className="p-8 md:p-16">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl xl:text-[105px] pb-6 font-extrabold tracking-tighter text-white [text-shadow:_0_4px_12px_rgb(0_0_0_/_80%),_0_2px_4px_rgb(0_0_0_/_100%)]">
+          {" "}
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl lg:text-8xl xl:text-[105px] pb-6 font-extrabold tracking-tighter text-teal-400 [text-shadow:_0_4px_12px_rgb(0_0_0_/_80%)] drop-shadow-2xl"
+          >
             Manage Your Finances <br /> with Intelligence
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-white mb-10 max-w-3xl mx-auto [text-shadow:_0_2px_8px_rgb(0_0_0_/_80%)] leading-relaxed">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg md:text-xl lg:text-2xl text-gray-100 mb-10 max-w-3xl mx-auto [text-shadow:_0_2px_8px_rgb(0_0_0_/_80%)] leading-relaxed"
+          >
             An AI-powered financial management platform that helps you track,
             analyze, and optimize your spending with real-time insights.
-          </p>
-          <div className="flex justify-center space-x-4">
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex justify-center space-x-4"
+          >
             <Link href="/dashboard">
               <Button
                 size="lg"
@@ -95,7 +112,7 @@ const HeroSection = () => {
                 Get Started
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
 
