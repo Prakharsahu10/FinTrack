@@ -23,18 +23,21 @@ const aj = arcjet({
         "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
         "GO_HTTP", // For Inngest
         // See the full list at https://arcjet.com/bot-list
-      ], 
+      ],
     }),
   ],
 });
 
 // Create base Clerk middleware
 const clerk = clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth();
+  // Only check auth for protected routes
+  if (isProtectedRoute(req)) {
+    const { userId } = await auth();
 
-  if (!userId && isProtectedRoute(req)) {
-    const { redirectToSignIn } = await auth();
-    return redirectToSignIn();
+    if (!userId) {
+      const { redirectToSignIn } = await auth();
+      return redirectToSignIn();
+    }
   }
 
   return NextResponse.next();

@@ -7,10 +7,16 @@ import { checkUser } from "@/lib/checkUser";
 import Image from "next/image";
 
 const Header = async () => {
-  await checkUser();
+  // Check user only if authenticated (will return null on public pages)
+  try {
+    await checkUser();
+  } catch (error) {
+    // User is not authenticated, continue rendering public header
+    console.log("Public page - user not authenticated");
+  }
 
   return (
-    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
+    <header className="fixed top-0 w-full bg-black/70 backdrop-blur-lg z-50 transition-all duration-300">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/">
           <Image
@@ -25,12 +31,12 @@ const Header = async () => {
         {/* Navigation Links - Different for signed in/out users */}
         <div className="hidden md:flex items-center space-x-8">
           <SignedOut>
-            <a href="#features" className="text-gray-600 hover:text-blue-600">
+            <a href="#features" className="text-gray-300 hover:text-teal-400">
               Features
             </a>
             <a
               href="#testimonials"
-              className="text-gray-600 hover:text-blue-600"
+              className="text-gray-300 hover:text-teal-400"
             >
               Testimonials
             </a>
@@ -40,17 +46,17 @@ const Header = async () => {
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
           <SignedIn>
-            <Link
-              href="/dashboard"
-              className="text-gray-600 hover:text-blue-600 flex items-center gap-2"
-            >
-              <Button variant="outline">
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                className="border-gray-700 text-black hover:text-teal-400 hover:border-teal-500 bg-white hover:bg-white"
+              >
                 <LayoutDashboard size={18} />
                 <span className="hidden md:inline">Dashboard</span>
               </Button>
             </Link>
             <a href="/transaction/create">
-              <Button className="flex items-center gap-2">
+              <Button className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white">
                 <PenBox size={18} />
                 <span className="hidden md:inline">Add Transaction</span>
               </Button>
@@ -58,7 +64,9 @@ const Header = async () => {
           </SignedIn>
           <SignedOut>
             <SignInButton forceRedirectUrl="/dashboard">
-              <Button variant="outline">Login</Button>
+              <Button className="bg-teal-600 hover:bg-teal-700 text-white border-0">
+                Login
+              </Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>

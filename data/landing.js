@@ -108,4 +108,67 @@ export const testimonialsData = [
     quote:
       "I recommend FinTrack to all my clients. The multi-currency support and detailed analytics make it perfect for international investors.",
   },
+  {
+    name: "David Thompson",
+    role: "Startup Founder",
+    image: "https://randomuser.me/api/portraits/men/74.jpg",
+    quote:
+      "FinTrack's budgeting tools helped me manage my startup's finances efficiently. The real-time alerts keep me updated on cash flow at all times.",
+  },
+  {
+    name: "Jessica Lee",
+    role: "Marketing Manager",
+    image: "https://randomuser.me/api/portraits/women/73.jpg",
+    quote:
+      "As someone who travels frequently, FinTrack's mobile app is a lifesaver. I can track expenses on the go without any hassle.",
+  },
+  {
+    name: "Robert Williams",
+    role: "Accountant",
+    image: "https://randomuser.me/api/portraits/men/73.jpg",
+    quote:
+      "The automated categorization and detailed reports make tax season so much easier. My clients love the transparency FinTrack provides.",
+  },
+  {
+    name: "Amanda Foster",
+    role: "Real Estate Agent",
+    image: "https://randomuser.me/api/portraits/women/72.jpg",
+    quote:
+      "Managing multiple properties and income streams is complex, but FinTrack makes it simple. The dashboard gives me instant visibility into my financials.",
+  },
+  {
+    name: "James Wilson",
+    role: "Consultant",
+    image: "https://randomuser.me/api/portraits/men/72.jpg",
+    quote:
+      "The invoice tracking and payment reminders have improved my cash flow significantly. I haven't missed a payment deadline since using FinTrack.",
+  },
+  {
+    name: "Lisa Anderson",
+    role: "Teacher",
+    image: "https://randomuser.me/api/portraits/women/71.jpg",
+    quote:
+      "FinTrack makes personal finance management accessible and easy to understand. The visual reports help me make better financial decisions.",
+  },
+  {
+    name: "Christopher Martinez",
+    role: "Software Developer",
+    image: "https://randomuser.me/api/portraits/men/71.jpg",
+    quote:
+      "I appreciate the API integrations and automation capabilities. FinTrack plays well with all my other tools and saves me so much time.",
+  },
+  {
+    name: "Victoria Brown",
+    role: "E-commerce Owner",
+    image: "https://randomuser.me/api/portraits/women/70.jpg",
+    quote:
+      "Multi-currency support is essential for my online business. FinTrack's seamless integration with my payment processors is incredible.",
+  },
+  {
+    name: "Kevin Taylor",
+    role: "Investment Manager",
+    image: "https://randomuser.me/api/portraits/men/70.jpg",
+    quote:
+      "The portfolio tracking and performance analytics are exactly what I needed. FinTrack has become my go-to platform for financial management.",
+  },
 ];
