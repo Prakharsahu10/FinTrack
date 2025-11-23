@@ -23,13 +23,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const COLORS = [
-  "#FF6B6B",
-  "#4ECDC4",
-  "#45B7D1",
-  "#96CEB4",
-  "#FFEEAD",
-  "#D4A5A5",
-  "#9FA8DA",
+  "#14b8a6", // teal-500
+  "#06b6d4", // cyan-500
+  "#3b82f6", // blue-500
+  "#8b5cf6", // violet-500
+  "#ec4899", // pink-500
+  "#f59e0b", // amber-500
+  "#10b981", // emerald-500
+  "#6366f1", // indigo-500
+  "#f97316", // orange-500
+  "#84cc16", // lime-500
 ];
 
 export function DashboardOverview({ accounts, transactions }) {
@@ -42,19 +45,44 @@ export function DashboardOverview({ accounts, transactions }) {
     (t) => t.accountId === selectedAccountId
   );
 
+  // Get available months from transaction history
+  const availableMonths = [
+    ...new Set(
+      accountTransactions.map((t) => {
+        const date = new Date(t.date);
+        return `${date.getFullYear()}-${String(date.getMonth()).padStart(2, "0")}`;
+      })
+    ),
+  ].sort((a, b) => b.localeCompare(a)); // Sort descending (newest first)
+
+  // Get the most recent month with transactions
+  const latestTransaction =
+    accountTransactions.length > 0
+      ? new Date(Math.max(...accountTransactions.map((t) => new Date(t.date))))
+      : new Date();
+
+  const defaultMonth =
+    availableMonths.length > 0
+      ? availableMonths[0]
+      : `${latestTransaction.getFullYear()}-${String(latestTransaction.getMonth()).padStart(2, "0")}`;
+
+  const [selectedMonth, setSelectedMonth] = useState(defaultMonth);
+
+  // Parse selected month
+  const [selectedYear, selectedMonthNum] = selectedMonth.split("-").map(Number);
+
   // Get recent transactions (last 5)
   const recentTransactions = accountTransactions
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
 
-  // Calculate expense breakdown for current month
-  const currentDate = new Date();
+  // Calculate expense breakdown for selected month
   const currentMonthExpenses = accountTransactions.filter((t) => {
     const transactionDate = new Date(t.date);
     return (
       t.type === "EXPENSE" &&
-      transactionDate.getMonth() === currentDate.getMonth() &&
-      transactionDate.getFullYear() === currentDate.getFullYear()
+      transactionDate.getMonth() === selectedMonthNum &&
+      transactionDate.getFullYear() === selectedYear
     );
   });
 
@@ -70,9 +98,10 @@ export function DashboardOverview({ accounts, transactions }) {
 
   // Format data for pie chart
   const pieChartData = Object.entries(expensesByCategory).map(
-    ([category, amount]) => ({
+    ([category, amount], index) => ({
       name: category,
       value: amount,
+      index: index,
     })
   );
 
@@ -150,10 +179,32 @@ export function DashboardOverview({ accounts, transactions }) {
 
       {/* Expense Breakdown Card */}
       <Card className="bg-gray-900 border-gray-700">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-base font-normal text-gray-100">
             Monthly Expense Breakdown
           </CardTitle>
+          {availableMonths.length > 0 && (
+            <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+              <SelectTrigger className="w-[150px] text-white">
+                <SelectValue placeholder="Select month" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-900 border-gray-700">
+                {availableMonths.map((month) => {
+                  const [year, monthNum] = month.split("-").map(Number);
+                  const date = new Date(year, monthNum);
+                  return (
+                    <SelectItem
+                      key={month}
+                      value={month}
+                      className="text-white focus:bg-gray-800 focus:text-white"
+                    >
+                      {format(date, "MMMM yyyy")}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          )}
         </CardHeader>
         <CardContent className="p-0 pb-5">
           {pieChartData.length === 0 ? (
@@ -161,17 +212,16 @@ export function DashboardOverview({ accounts, transactions }) {
               No expenses this month
             </p>
           ) : (
-            <div className="h-[300px]">
+            <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieChartData}
                     cx="50%"
                     cy="50%"
-                    outerRadius={80}
+                    outerRadius={130}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, value }) => `${name}: $${value.toFixed(2)}`}
                   >
                     {pieChartData.map((entry, index) => (
                       <Cell
@@ -181,14 +231,23 @@ export function DashboardOverview({ accounts, transactions }) {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value) => `$${value.toFixed(2)}`}
-                    contentStyle={{
-                      backgroundColor: "hsl(var(--popover))",
-                      border: "1px solid hsl(var(--border))",
-                      borderRadius: "var(--radius)",
+                    formatter={(value, name, props) => {
+                      const color = COLORS[props.payload.index % COLORS.length];
+                      return [
+                        <span style={{ color }}>${value.toFixed(2)}</span>,
+                        <span style={{ color }}>
+                          {name.charAt(0).toUpperCase() + name.slice(1)}
+                        </span>,
+                      ];
                     }}
+                    contentStyle={{
+                      backgroundColor: "#1f2937",
+                      border: "1px solid #374151",
+                      borderRadius: "0.5rem",
+                      color: "#fff",
+                    }}
+                    labelStyle={{ color: "#fff" }}
                   />
-                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>

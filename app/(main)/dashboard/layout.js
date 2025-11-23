@@ -2,6 +2,10 @@ import DashboardPage from "./page";
 import { BarLoader } from "react-spinners";
 import { Suspense } from "react";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function Layout() {
   return (
     <div className="px-5">

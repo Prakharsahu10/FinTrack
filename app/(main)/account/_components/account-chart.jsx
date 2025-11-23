@@ -34,14 +34,22 @@ export function AccountChart({ transactions }) {
 
   const filteredData = useMemo(() => {
     const range = DATE_RANGES[dateRange];
-    const now = new Date();
+
+    // Find the latest transaction date to use as reference
+    const latestDate =
+      transactions.length > 0
+        ? new Date(Math.max(...transactions.map((t) => new Date(t.date))))
+        : new Date();
+
     const startDate = range.days
-      ? startOfDay(subDays(now, range.days))
+      ? startOfDay(subDays(latestDate, range.days))
       : startOfDay(new Date(0));
 
     // Filter transactions within date range
     const filtered = transactions.filter(
-      (t) => new Date(t.date) >= startDate && new Date(t.date) <= endOfDay(now)
+      (t) =>
+        new Date(t.date) >= startDate &&
+        new Date(t.date) <= endOfDay(latestDate)
     );
 
     // Group transactions by date
