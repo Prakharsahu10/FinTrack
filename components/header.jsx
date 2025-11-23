@@ -16,7 +16,7 @@ const Header = async () => {
   }
 
   return (
-    <header className="fixed top-0 w-full bg-black/70 backdrop-blur-lg z-50 transition-all duration-300">
+    <header className="fixed top-0 w-full bg-black z-50 transition-all duration-300 border-b border-gray-800">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/">
           <Image

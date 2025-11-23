@@ -64,10 +64,10 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
   }, [error]);
 
   return (
-    <Card>
+    <Card className="bg-gray-900 border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex-1">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-sm font-medium text-gray-100">
             Monthly Budget (Default Account)
           </CardTitle>
           <div className="flex items-center gap-2 mt-1">
@@ -77,7 +77,7 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                   type="number"
                   value={newBudget}
                   onChange={(e) => setNewBudget(e.target.value)}
-                  className="w-32"
+                  className="w-32 text-white placeholder:text-gray-400"
                   placeholder="Enter amount"
                   autoFocus
                   disabled={isLoading}
@@ -101,7 +101,7 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
               </div>
             ) : (
               <>
-                <CardDescription>
+                <CardDescription className="text-gray-400">
                   {initialBudget
                     ? `$${currentExpenses.toFixed(
                         2
@@ -114,7 +114,7 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                   onClick={() => setIsEditing(true)}
                   className="h-6 w-6"
                 >
-                  <Pencil className="h-3 w-3" />
+                  <Pencil className="h-3 w-3 text-white" />
                 </Button>
               </>
             )}
@@ -126,16 +126,17 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
           <div className="space-y-2">
             <Progress
               value={percentUsed}
+              className="bg-gray-700"
               extraStyles={`${
                 // add to Progress component
                 percentUsed >= 90
                   ? "bg-red-500"
                   : percentUsed >= 75
                     ? "bg-yellow-500"
-                    : "bg-green-500"
+                    : "bg-teal-500"
               }`}
             />
-            <p className="text-xs text-muted-foreground text-right">
+            <p className="text-xs text-gray-400 text-right">
               {percentUsed.toFixed(1)}% used
             </p>
           </div>
