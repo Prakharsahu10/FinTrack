@@ -204,7 +204,7 @@ export function TransactionTable({ transactions }) {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
           <Input
             placeholder="Search transactions..."
             value={searchTerm}
@@ -212,7 +212,7 @@ export function TransactionTable({ transactions }) {
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="pl-8"
+            className="pl-8 bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
           />
         </div>
         <div className="flex gap-2">
@@ -223,7 +223,7 @@ export function TransactionTable({ transactions }) {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-[130px] bg-gray-800 border-gray-700 text-white">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -239,7 +239,7 @@ export function TransactionTable({ transactions }) {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-[130px] bg-gray-800 border-gray-700 text-white">
               <SelectValue placeholder="All Transactions" />
             </SelectTrigger>
             <SelectContent>
@@ -255,6 +255,7 @@ export function TransactionTable({ transactions }) {
                 variant="destructive"
                 size="sm"
                 onClick={handleBulkDelete}
+                className="bg-red-600 hover:bg-red-700"
               >
                 <Trash className="h-4 w-4 mr-2" />
                 Delete Selected ({selectedIds.length})
@@ -276,10 +277,10 @@ export function TransactionTable({ transactions }) {
       </div>
 
       {/* Transactions Table */}
-      <div className="rounded-md border">
+      <div className="rounded-md border border-gray-700 bg-gray-900">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="border-gray-700 hover:bg-gray-800">
               <TableHead className="w-[50px]">
                 <Checkbox
                   checked={
@@ -290,7 +291,7 @@ export function TransactionTable({ transactions }) {
                 />
               </TableHead>
               <TableHead
-                className="cursor-pointer"
+                className="cursor-pointer text-white"
                 onClick={() => handleSort("date")}
               >
                 <div className="flex items-center">
@@ -303,9 +304,9 @@ export function TransactionTable({ transactions }) {
                     ))}
                 </div>
               </TableHead>
-              <TableHead>Description</TableHead>
+              <TableHead className="text-white">Description</TableHead>
               <TableHead
-                className="cursor-pointer"
+                className="cursor-pointer text-white"
                 onClick={() => handleSort("category")}
               >
                 <div className="flex items-center">
@@ -319,7 +320,7 @@ export function TransactionTable({ transactions }) {
                 </div>
               </TableHead>
               <TableHead
-                className="cursor-pointer text-right"
+                className="cursor-pointer text-right text-white"
                 onClick={() => handleSort("amount")}
               >
                 <div className="flex items-center justify-end">
@@ -332,33 +333,35 @@ export function TransactionTable({ transactions }) {
                     ))}
                 </div>
               </TableHead>
-              <TableHead>Recurring</TableHead>
+              <TableHead className="text-white">Recurring</TableHead>
               <TableHead className="w-[50px]" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedTransactions.length === 0 ? (
-              <TableRow>
-                <TableCell
-                  colSpan={7}
-                  className="text-center text-muted-foreground"
-                >
+              <TableRow className="border-gray-700">
+                <TableCell colSpan={7} className="text-center text-gray-400">
                   No transactions found
                 </TableCell>
               </TableRow>
             ) : (
               paginatedTransactions.map((transaction) => (
-                <TableRow key={transaction.id}>
+                <TableRow
+                  key={transaction.id}
+                  className="border-gray-700 hover:bg-gray-800"
+                >
                   <TableCell>
                     <Checkbox
                       checked={selectedIds.includes(transaction.id)}
                       onCheckedChange={() => handleSelect(transaction.id)}
                     />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-gray-300">
                     {format(new Date(transaction.date), "PP")}
                   </TableCell>
-                  <TableCell>{transaction.description}</TableCell>
+                  <TableCell className="text-gray-300">
+                    {transaction.description}
+                  </TableCell>
                   <TableCell className="capitalize">
                     <span
                       style={{
@@ -387,7 +390,7 @@ export function TransactionTable({ transactions }) {
                           <TooltipTrigger>
                             <Badge
                               variant="secondary"
-                              className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200"
+                              className="gap-1 bg-teal-100 text-teal-700 hover:bg-teal-200"
                             >
                               <RefreshCw className="h-3 w-3" />
                               {
@@ -462,7 +465,7 @@ export function TransactionTable({ transactions }) {
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <span className="text-sm">
+          <span className="text-sm text-white">
             Page {currentPage} of {totalPages}
           </span>
           <Button

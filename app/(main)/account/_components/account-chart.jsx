@@ -76,18 +76,22 @@ export function AccountChart({ transactions }) {
   }, [filteredData]);
 
   return (
-    <Card>
+    <Card className="bg-gray-900 border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
-        <CardTitle className="text-base font-normal">
+        <CardTitle className="text-base font-normal text-white">
           Transaction Overview
         </CardTitle>
         <Select defaultValue={dateRange} onValueChange={setDateRange}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[140px] bg-gray-800 border-gray-700 text-white">
             <SelectValue placeholder="Select range" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-gray-800 border-gray-700">
             {Object.entries(DATE_RANGES).map(([key, { label }]) => (
-              <SelectItem key={key} value={key}>
+              <SelectItem
+                key={key}
+                value={key}
+                className="text-white focus:bg-gray-700 focus:text-white"
+              >
                 {label}
               </SelectItem>
             ))}
@@ -97,19 +101,19 @@ export function AccountChart({ transactions }) {
       <CardContent>
         <div className="flex justify-around mb-6 text-sm">
           <div className="text-center">
-            <p className="text-muted-foreground">Total Income</p>
+            <p className="text-gray-400">Total Income</p>
             <p className="text-lg font-bold text-green-500">
               ${totals.income.toFixed(2)}
             </p>
           </div>
           <div className="text-center">
-            <p className="text-muted-foreground">Total Expenses</p>
+            <p className="text-gray-400">Total Expenses</p>
             <p className="text-lg font-bold text-red-500">
               ${totals.expense.toFixed(2)}
             </p>
           </div>
           <div className="text-center">
-            <p className="text-muted-foreground">Net</p>
+            <p className="text-gray-400">Net</p>
             <p
               className={`text-lg font-bold ${
                 totals.income - totals.expense >= 0
@@ -127,25 +131,32 @@ export function AccountChart({ transactions }) {
               data={filteredData}
               margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="#374151"
+              />
               <XAxis
                 dataKey="date"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
+                stroke="#9ca3af"
               />
               <YAxis
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `$${value}`}
+                stroke="#9ca3af"
               />
               <Tooltip
                 formatter={(value) => [`$${value}`, undefined]}
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "var(--radius)",
+                  backgroundColor: "#1f2937",
+                  border: "1px solid #374151",
+                  borderRadius: "0.5rem",
+                  color: "#fff",
                 }}
               />
               <Legend />
