@@ -1,10 +1,8 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { subDays } from "date-fns";
-
-const ACCOUNT_ID = "account-id";
-const USER_ID = "user-id";
+import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 // Categories with their typical amount ranges
 const CATEGORIES = {
@@ -43,17 +41,40 @@ function getRandomCategory(type) {
 
 export async function seedTransactions() {
   try {
-    // Generate 90 days of transactions
+    // Get current user
+    const { userId } = await auth();
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    // Get user's default account
+    const account = await db.account.findFirst({
+      where: {
+        userId: userId,
+        isDefault: true,
+      },
+    });
+
+    if (!account) {
+      throw new Error("No default account found. Please create an account first.");
+    }
+
+    // Generate transactions from Jan 1, 2024 to October 31, 2024
+    const startDate = new Date('2024-01-01');
+    const endDate = new Date('2024-10-31');
+    const daysDiff = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+
     const transactions = [];
     let totalBalance = 0;
 
-    for (let i = 90; i >= 0; i--) {
-      const date = subDays(new Date(), i);
+    for (let i = 0; i <= daysDiff; i++) {
+      const date = new Date(startDate);
+      date.setDate(date.getDate() + i);
 
-      // Generate 1-3 transactions per day
-      const transactionsPerDay = Math.floor(Math.random() * 3) + 1;
+      // Generate 1-3 transactions per day to cover all months properly
+      const transPerDay = Math.floor(Math.random() * 3) + 1;
 
-      for (let j = 0; j < transactionsPerDay; j++) {
+      for (let j = 0; j < transPerDay; j++) {
         // 40% chance of income, 60% chance of expense
         const type = Math.random() < 0.4 ? "INCOME" : "EXPENSE";
         const { category, amount } = getRandomCategory(type);
@@ -62,14 +83,13 @@ export async function seedTransactions() {
           id: crypto.randomUUID(),
           type,
           amount,
-          description: `${
-            type === "INCOME" ? "Received" : "Paid for"
-          } ${category}`,
+          description: `${type === "INCOME" ? "Received" : "Paid for"
+            } ${category}`,
           date,
           category,
           status: "COMPLETED",
-          userId: USER_ID,
-          accountId: ACCOUNT_ID,
+          userId: userId,
+          accountId: account.id,
           createdAt: date,
           updatedAt: date,
         };
@@ -81,9 +101,9 @@ export async function seedTransactions() {
 
     // Insert transactions in batches and update account balance
     await db.$transaction(async (tx) => {
-      // Clear existing transactions
+      // Clear existing transactions for this account
       await tx.transaction.deleteMany({
-        where: { accountId: ACCOUNT_ID },
+        where: { accountId: account.id },
       });
 
       // Insert new transactions
@@ -93,10 +113,14 @@ export async function seedTransactions() {
 
       // Update account balance
       await tx.account.update({
-        where: { id: ACCOUNT_ID },
+        where: { id: account.id },
         data: { balance: totalBalance },
       });
     });
+
+    // Revalidate all relevant paths to show new data
+    revalidatePath("/dashboard");
+    revalidatePath(`/account/${account.id}`);
 
     return {
       success: true,

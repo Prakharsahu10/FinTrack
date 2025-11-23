@@ -17,7 +17,6 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
-    runtime: "nodejs",
   },
 
   eslint: {
