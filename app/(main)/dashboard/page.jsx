@@ -32,7 +32,7 @@ export default async function DashboardPage() {
       {/* Budget Progress */}
       <BudgetProgress
         initialBudget={budgetData?.budget}
-        currentExpenses={budgetData?.currentExpenses || 0}
+        transactions={transactions || []}
       />
 
       {/* Dashboard Overview */}

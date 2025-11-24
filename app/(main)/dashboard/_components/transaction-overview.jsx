@@ -231,22 +231,32 @@ export function DashboardOverview({ accounts, transactions }) {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value, name, props) => {
-                      const color = COLORS[props.payload.index % COLORS.length];
-                      return [
-                        <span style={{ color }}>${value.toFixed(2)}</span>,
-                        <span style={{ color }}>
-                          {name.charAt(0).toUpperCase() + name.slice(1)}
-                        </span>,
-                      ];
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0];
+                        const color =
+                          COLORS[data.payload.index % COLORS.length];
+                        return (
+                          <div
+                            style={{
+                              backgroundColor: "#1f2937",
+                              border: "1px solid #374151",
+                              borderRadius: "0.5rem",
+                              padding: "8px 12px",
+                            }}
+                          >
+                            <p style={{ color, margin: 0, fontWeight: 600 }}>
+                              {data.name.charAt(0).toUpperCase() +
+                                data.name.slice(1)}
+                            </p>
+                            <p style={{ color, margin: "4px 0 0 0" }}>
+                              ${data.value.toFixed(2)}
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
                     }}
-                    contentStyle={{
-                      backgroundColor: "#1f2937",
-                      border: "1px solid #374151",
-                      borderRadius: "0.5rem",
-                      color: "#fff",
-                    }}
-                    labelStyle={{ color: "#fff" }}
                   />
                 </PieChart>
               </ResponsiveContainer>
