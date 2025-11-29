@@ -47,21 +47,32 @@ export async function seedTransactions() {
       throw new Error("Unauthorized");
     }
 
+    // Find user in database by Clerk user ID
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
     // Get user's default account
     const account = await db.account.findFirst({
       where: {
-        userId: userId,
+        userId: user.id,
         isDefault: true,
       },
     });
 
     if (!account) {
-      throw new Error("No default account found. Please create an account first.");
+      throw new Error(
+        "No default account found. Please create an account first."
+      );
     }
 
     // Generate transactions from Jan 1, 2024 to October 31, 2024
-    const startDate = new Date('2024-01-01');
-    const endDate = new Date('2024-10-31');
+    const startDate = new Date("2024-01-01");
+    const endDate = new Date("2024-10-31");
     const daysDiff = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
 
     const transactions = [];
@@ -80,15 +91,15 @@ export async function seedTransactions() {
         const { category, amount } = getRandomCategory(type);
 
         const transaction = {
-          id: crypto.randomUUID(),
           type,
-          amount,
-          description: `${type === "INCOME" ? "Received" : "Paid for"
-            } ${category}`,
+          amount: amount.toString(), // Prisma Decimal requires string
+          description: `${
+            type === "INCOME" ? "Received" : "Paid for"
+          } ${category}`,
           date,
           category,
           status: "COMPLETED",
-          userId: userId,
+          userId: user.id,
           accountId: account.id,
           createdAt: date,
           updatedAt: date,
@@ -114,7 +125,7 @@ export async function seedTransactions() {
       // Update account balance
       await tx.account.update({
         where: { id: account.id },
-        data: { balance: totalBalance },
+        data: { balance: totalBalance.toString() }, // Prisma Decimal requires string
       });
     });
 
